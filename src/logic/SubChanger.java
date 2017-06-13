@@ -1,8 +1,7 @@
 package logic;
 
-import models.FromTime;
+import models.Time;
 import models.SubSection;
-import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +10,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import logic.Utility;
 
 /**
  * Created by Simone Masini on 12/06/2017.
@@ -20,15 +18,18 @@ public class SubChanger {
 
     private String filePath;
     private boolean anticipate;
-    private FromTime fromTime;
+    private Time fromTime, toTime;
+    private boolean checkEndTime;
     private int changeValue;
     private List<SubSection> subSections;
 
-    public SubChanger(String filePath, boolean anticipate, String fromTime, int changeValue) {
+    public SubChanger(String filePath, boolean anticipate, String fromTime, String toTime, int changeValue) {
         this.filePath = filePath;
         this.anticipate = anticipate;
-        this.fromTime = new FromTime(fromTime);
+        this.fromTime = new Time(fromTime);
+        this.toTime = new Time(toTime);
         this.changeValue = changeValue;
+        this.checkEndTime = !this.toTime.isAllZero();
     }
 
     public void parseAndSave(){
@@ -41,7 +42,6 @@ public class SubChanger {
         File file = new File(filePath);
         try {
             Scanner scan = new Scanner(file);
-            //scan.useDelimiter("\r\n");
             while (scan.hasNextLine()) {
                 subSections.add(changeSection(getSection(scan)));
             }
@@ -73,7 +73,7 @@ public class SubChanger {
     }
 
     private SubSection changeSection(SubSection section){
-        if(section.getSubTimeStart().compare(fromTime) >= 0){
+        if(section.getSubTimeStart().compare(fromTime) >= 0 && (checkEndTime && section.getSubTimeEnd().compare(toTime) <= 0)){
             section.getSubTimeStart().changeTime(changeValue, anticipate);
             section.getSubTimeEnd().changeTime(changeValue, anticipate);
         }

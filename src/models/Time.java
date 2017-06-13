@@ -3,11 +3,11 @@ package models;
 /**
  * Created by Simone Masini on 12/06/2017.
  */
-public class FromTime {
+public class Time {
 
     private int hour, minute, second;
 
-    public FromTime(String time) {
+    public Time(String time) {
         this.hour = 0;
         this.minute = 0;
         this.second = 0;
@@ -19,6 +19,10 @@ public class FromTime {
                 second = Integer.parseInt(arrs1[2]);
             }
         }
+    }
+
+    public boolean isAllZero(){
+        return hour == 0 && minute == 0 && second == 0;
     }
 
     public int getHour() {

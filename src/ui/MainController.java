@@ -22,6 +22,8 @@ public class MainController implements Initializable{
     @FXML
     private TextField txtFromTime;
     @FXML
+    private TextField txtToTime;
+    @FXML
     private TextField txtChangeValue;
     @FXML
     private RadioButton rdbAnticipate;
@@ -41,7 +43,7 @@ public class MainController implements Initializable{
     @FXML
     private void btnSubmitAction(){
         int changeValue = Integer.parseInt(txtChangeValue.getText());
-        SubChanger subChanger = new SubChanger(txtInputFile.getText(), rdbAnticipate.isSelected(), txtFromTime.getText(), changeValue);
+        SubChanger subChanger = new SubChanger(txtInputFile.getText(), rdbAnticipate.isSelected(), txtFromTime.getText(), txtToTime.getText(), changeValue);
         subChanger.parseAndSave();
     }
 

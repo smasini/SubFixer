@@ -39,7 +39,7 @@ public class SubTime {
         }
     }
 
-    public int compare(FromTime fromTime){
+    public int compare(Time fromTime){
         if(hour == fromTime.getHour() && minute == fromTime.getMinute() && second == fromTime.getSecond()){
             return 0;
         }
