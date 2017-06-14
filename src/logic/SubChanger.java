@@ -57,7 +57,7 @@ public class SubChanger {
         if(section == null){
             section = new SubSection();
         }
-        String line = scanner.nextLine();
+        String line = scanner.nextLine().replaceAll("“", "\"").replaceAll("”", "\"");
         if(line.equals("\n") || line.equals("")){
             return section;
         }
@@ -72,7 +72,7 @@ public class SubChanger {
     }
 
     private SubSection changeSection(SubSection section){
-        if(section.getSubTimeStart().compare(fromTime) >= 0 && (checkEndTime && section.getSubTimeEnd().compare(toTime) <= 0)){
+        if(section.getSubTimeStart().compare(fromTime) >= 0 && (!checkEndTime || section.getSubTimeEnd().compare(toTime) <= 0)){
             section.getSubTimeStart().changeTime(changeValue, anticipate);
             section.getSubTimeEnd().changeTime(changeValue, anticipate);
         }
@@ -95,6 +95,12 @@ public class SubChanger {
                     output.println(line);
                 }
                 output.println();
+            }
+            output.close();
+            try {
+                file.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

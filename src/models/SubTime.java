@@ -65,11 +65,11 @@ public class SubTime {
         }else{
             second += dealy;
         }
-        Remain secondRemain = Utility.calculateRemains(second);
+        Remain secondRemain = Utility.calculateRemains(second, anticipate);
         second = secondRemain.getValue();
 
         minute += secondRemain.getRemain();
-        Remain minuteRemain = Utility.calculateRemains(minute);
+        Remain minuteRemain = Utility.calculateRemains(minute, anticipate);
         minute = minuteRemain.getValue();
 
         hour += minuteRemain.getRemain();

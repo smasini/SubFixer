@@ -43,20 +43,25 @@ public class Utility {
         return outputName;
     }
 
-    public static Remain calculateRemains(int value){
+    public static Remain calculateRemains(int value, boolean anticipate){
         Remain remain = new Remain();
         remain.setValue(value);
         remain.setRemain(0);
-        return calculateRemains(remain);
+        return calculateRemains(remain, anticipate);
     }
 
-    public static Remain calculateRemains(Remain remain){
-        if(remain.getValue()<60){
+    public static Remain calculateRemains(Remain remain, boolean anticipate){
+        if(remain.getValue() >= 0 && remain.getValue()<60){
             return remain;
         }
-        remain.setValue(remain.getValue() - 60);
-        remain.setRemain(remain.getRemain()+1);
-        return calculateRemains(remain);
+        if(anticipate){
+            remain.setValue(remain.getValue() + 60);
+            remain.setRemain(remain.getRemain()-1);
+        }else{
+            remain.setValue(remain.getValue() - 60);
+            remain.setRemain(remain.getRemain()+1);
+        }
+        return calculateRemains(remain, anticipate);
     }
 
 }
