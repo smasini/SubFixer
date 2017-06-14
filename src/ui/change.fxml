@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ChangeController">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <TextField id="txtInputFile" fx:id="txtInputFile" prefHeight="25.0" prefWidth="440.0" GridPane.rowIndex="1" />
+      <Button id="btnBrowse" mnemonicParsing="false" onAction="#btnBrowseAction" text="Browse" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label text="Select the input file">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label text="Start change file from (leave empty if start from the beginning)" GridPane.rowIndex="2" />
+      <TextField id="txtFromTime" fx:id="txtFromTime" promptText="HH:mm:ss" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+      <Label layoutX="10.0" layoutY="75.0" text="End change file to (leave empty if stop to the end)" GridPane.rowIndex="4" />
+      <TextField id="txtToTime" fx:id="txtToTime" layoutX="10.0" layoutY="102.0" promptText="HH:mm:ss" GridPane.rowIndex="5" GridPane.columnSpan="2" />
+      <Label text="Change type" GridPane.rowIndex="6" />
+      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="440.0" spacing="20.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
+         <children>
+            <RadioButton id="rdbAnticipate" fx:id="rdbAnticipate" mnemonicParsing="false" selected="true" text="Anticipate">
+               <toggleGroup>
+                  <ToggleGroup fx:id="CHANGE_TYPE" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton id="rdbPosticipate" fx:id="rdbPospone" mnemonicParsing="false" text="Postpone" toggleGroup="$CHANGE_TYPE" />
+         </children>
+      </HBox>
+      <Label text="Change value" GridPane.rowIndex="8" />
+      <TextField id="txtChangeValue" fx:id="txtChangeValue" promptText="seconds" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+      <Button id="btnSubmit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnSubmitAction" text="Submit" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+   </children>
+</GridPane>

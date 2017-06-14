@@ -3,10 +3,7 @@ package logic;
 import models.Time;
 import models.SubSection;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +13,7 @@ import java.util.Scanner;
  */
 public class SubChanger {
 
-    private String filePath;
+    private String filePath, filePathDest;
     private boolean anticipate;
     private Time fromTime, toTime;
     private boolean checkEndTime;
@@ -39,7 +36,9 @@ public class SubChanger {
 
     private void parseFile(){
         subSections = new ArrayList<SubSection>();
-        File file = new File(filePath);
+        filePathDest = Utility.getNewFileName(filePath);
+        File file = new File(filePathDest);
+        SubConverter.transform(new File(filePath), file, "UTF-8");
         try {
             Scanner scan = new Scanner(file);
             while (scan.hasNextLine()) {
@@ -82,10 +81,9 @@ public class SubChanger {
 
 
     private void save(){
-        String outputName = Utility.getNewFileName(filePath);
         FileOutputStream file = null;
         try {
-            file = new FileOutputStream(outputName);
+            file = new FileOutputStream(filePathDest);
         } catch (FileNotFoundException ex) {
             System.out.print("Errore salvataggio");
         }if(file!=null) {

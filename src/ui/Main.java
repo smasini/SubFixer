@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
         Parent root = loader.load();
-        MainController controller = (MainController) loader.getController();
+        MainController controller =  loader.getController();
         controller.setStageAndSetupListeners(primaryStage); // or what you want to do
         primaryStage.setTitle("Sub Fixer");
         primaryStage.setScene(new Scene(root, 600, 375));
