@@ -57,7 +57,16 @@ public class SubChanger {
         if(section == null){
             section = new SubSection();
         }
-        String line = scanner.nextLine().replaceAll("“", "\"").replaceAll("”", "\"");
+        String line = scanner.nextLine()
+                .replaceAll("à", "a'")
+                .replaceAll("è", "e'")
+                .replaceAll("é", "e'")
+                .replaceAll("ì", "i'")
+                .replaceAll("ò", "o'")
+                .replaceAll("ù", "u'")
+                .replaceAll("“", "\"")
+                .replaceAll("“", "\"")
+                .replaceAll("”", "\"");
         if(line.equals("\n") || line.equals("")){
             return section;
         }
