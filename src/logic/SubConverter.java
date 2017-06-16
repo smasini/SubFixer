@@ -26,12 +26,29 @@ public class SubConverter {
                 InputStream inputStream = new FileInputStream(source);
                 BOMInputStream bomInputStream = new BOMInputStream(inputStream);
                 ByteOrderMark bom = bomInputStream.getBOM();
-                br = new BufferedReader(new InputStreamReader(new BufferedInputStream(bomInputStream), getCharset(source)));
+                String charset = getCharset(source);
+                if(!charset.equals("UTF-8")){
+                    //TODO controllo se sono in windows?
+                    //charset =  "ISO-8859-1";
+                    charset = "Windows-1252";
+                }
+                br = new BufferedReader(new InputStreamReader(new BufferedInputStream(bomInputStream), charset));
                 bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(target), tgtEncoding));
-                char[] buffer = new char[16384];
-                int read;
-                while ((read = br.read(buffer)) != -1){
-                    bw.write(buffer, 0, read);
+                String line;
+                while ((line = br.readLine()) != null) {
+                    line = line
+                            .replaceAll("à", "a'")
+                            .replaceAll("è", "e'")
+                            .replaceAll("é", "e'")
+                            .replaceAll("ì", "i'")
+                            .replaceAll("ò", "o'")
+                            .replaceAll("ù", "u'")
+                            .replaceAll("\\\"{2}", "\"")
+                            .replaceAll("�", "")
+                            .replaceAll("“", "\"")
+                            .replaceAll("“", "\"")
+                            .replaceAll("”", "\"");
+                    bw.write(line + "\n");
                 }
             } finally {
                 try {
