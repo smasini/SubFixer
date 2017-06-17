@@ -2,6 +2,8 @@ package logic;
 
 import models.Time;
 import models.SubSection;
+import org.apache.commons.io.ByteOrderMark;
+import org.apache.commons.io.input.BOMInputStream;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.Scanner;
  */
 public class SubChanger {
 
+    private Callback callback;
     private String filePath, filePathDest;
     private boolean anticipate;
     private Time fromTime, toTime;
@@ -31,7 +34,15 @@ public class SubChanger {
 
     public void parseAndSave(){
         parseFile();
-        save();
+        if(save()) {
+            if (callback != null) {
+                callback.onComplete();
+            }
+        }else{
+            if (callback != null) {
+                callback.onError();
+            }
+        }
     }
 
     private void parseFile(){
@@ -79,30 +90,52 @@ public class SubChanger {
         return section;
     }
 
-
-    private void save(){
-        FileOutputStream file = null;
+    private boolean save(){
         try {
-            file = new FileOutputStream(filePathDest);
-        } catch (FileNotFoundException ex) {
-            System.out.print("Errore salvataggio");
-        }if(file!=null) {
-            PrintStream output = new PrintStream(file);
-            for (SubSection subSection : subSections) {
-                output.println(subSection.getId());
-                output.println(subSection.printRangeTime());
-                for (String line : subSection.getSubsLines()) {
-                    output.println(line);
-                }
-                output.println();
-            }
-            output.close();
+            BufferedWriter bw = null;
+            FileOutputStream fileOutputStream = null;
+            OutputStreamWriter outputStreamWriter = null;
             try {
-                file.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                fileOutputStream = new FileOutputStream(new File(filePathDest));
+                outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
+                bw = new BufferedWriter(outputStreamWriter);
+                for (SubSection subSection : subSections) {
+                    bw.write(subSection.getId() + "\n");
+                    bw.write(subSection.printRangeTime() + "\n");
+                    for (String line : subSection.getSubsLines()) {
+                        bw.write(line + "\n");
+                    }
+                    bw.write("\n");
+                }
+            } finally {
+                try {
+                    if (fileOutputStream != null) {
+                        fileOutputStream.flush();
+                        fileOutputStream.close();
+                    }
+                }
+                finally {
+                    try {
+                        if (outputStreamWriter != null) {
+                            outputStreamWriter.flush();
+                            outputStreamWriter.close();
+                        }
+                    }
+                    finally {
+                        if (bw != null)
+                            bw.close();
+                    }
+                }
             }
         }
+        catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
 }

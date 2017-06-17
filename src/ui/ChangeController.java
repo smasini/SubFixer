@@ -2,10 +2,12 @@ package ui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import logic.Callback;
 import logic.SubChanger;
 
 import java.io.File;
@@ -29,6 +31,9 @@ public class ChangeController {
     private RadioButton rdbAnticipate;
     @FXML
     private RadioButton rdbPosticipate;
+    @FXML
+    private ProgressBar progress;
+
 
     @FXML
     private void btnBrowseAction(){
@@ -44,6 +49,18 @@ public class ChangeController {
     private void btnSubmitAction(){
         int changeValue = Integer.parseInt(txtChangeValue.getText());
         SubChanger subChanger = new SubChanger(txtInputFile.getText(), rdbAnticipate.isSelected(), txtFromTime.getText(), txtToTime.getText(), changeValue);
+        progress.setProgress(10);
+        subChanger.setCallback(new Callback() {
+            @Override
+            public void onComplete() {
+                progress.setProgress(100);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
         subChanger.parseAndSave();
     }
 
