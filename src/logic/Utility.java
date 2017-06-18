@@ -64,4 +64,14 @@ public class Utility {
         return calculateRemains(remain, anticipate);
     }
 
+    public static File getFirstDirectory(File file){
+        if(file==null || !file.exists()){
+            return null;
+        }
+        if(file.isDirectory()){
+            return file;
+        }
+        return getFirstDirectory(file.getParentFile());
+    }
+
 }

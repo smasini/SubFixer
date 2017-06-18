@@ -108,7 +108,7 @@ public class SubChanger {
                     bw.write("\n");
                 }
             } finally {
-                try {
+                /*try {
                     if (fileOutputStream != null) {
                         fileOutputStream.flush();
                         fileOutputStream.close();
@@ -121,11 +121,11 @@ public class SubChanger {
                             outputStreamWriter.close();
                         }
                     }
-                    finally {
+                    finally {*/
                         if (bw != null)
                             bw.close();
-                    }
-                }
+                    //}
+                //}
             }
         }
         catch (IOException e) {

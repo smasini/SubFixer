@@ -9,6 +9,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import logic.Callback;
 import logic.SubChanger;
+import logic.Utility;
 
 import java.io.File;
 import java.net.URL;
@@ -39,6 +40,13 @@ public class ChangeController {
     private void btnBrowseAction(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open sub file");
+        if(txtInputFile.getText() != null && !txtInputFile.getText().isEmpty()){
+            File file = new File(txtInputFile.getText());
+            File dir = Utility.getFirstDirectory(file);
+            if(dir!=null){
+                fileChooser.setInitialDirectory(dir);
+            }
+        }
         File file = fileChooser.showOpenDialog(mStage);
         if(file != null){
             txtInputFile.setText(file.getAbsolutePath());
@@ -61,6 +69,8 @@ public class ChangeController {
 
             }
         });
+
+        //TODO eseguirlo in background
         subChanger.parseAndSave();
     }
 
