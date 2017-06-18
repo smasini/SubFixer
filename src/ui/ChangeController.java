@@ -55,6 +55,9 @@ public class ChangeController {
 
     @FXML
     private void btnSubmitAction(){
+        if(txtChangeValue.getText() == null || txtChangeValue.getText().isEmpty()){
+            return;
+        }
         int changeValue = Integer.parseInt(txtChangeValue.getText());
         final SubChanger subChanger = new SubChanger(txtInputFile.getText(), rdbAnticipate.isSelected(), txtFromTime.getText(), txtToTime.getText(), changeValue);
         progress.setProgress(10);

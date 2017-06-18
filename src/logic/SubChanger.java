@@ -55,6 +55,7 @@ public class SubChanger {
             while (scan.hasNextLine()) {
                 subSections.add(changeSection(getSection(scan)));
             }
+            scan.close();
         } catch (FileNotFoundException ex) {
             System.out.println("Impossibile leggere il file");
         }
@@ -91,6 +92,32 @@ public class SubChanger {
     }
 
     private boolean save(){
+        try {
+            PrintWriter writer = null;
+            try {
+                writer = new PrintWriter(filePathDest, "UTF-8");
+                for (SubSection subSection : subSections) {
+                    writer.println(subSection.getId());
+                    writer.println(subSection.printRangeTime());
+                    for (String line : subSection.getSubsLines()) {
+                        writer.println(line);
+                    }
+                    writer.println();
+                }
+            }
+            finally {
+                if(writer!=null){
+                    writer.close();
+                }
+            }
+            return true;
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean saveOld(){
         try {
             BufferedWriter bw = null;
             FileOutputStream fileOutputStream = null;
