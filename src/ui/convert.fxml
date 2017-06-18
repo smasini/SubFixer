@@ -6,6 +6,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ConvertController">
 <columnConstraints>
     <ColumnConstraints />
@@ -15,18 +18,17 @@
     <RowConstraints />
     <RowConstraints />
     <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
+    <RowConstraints />
 </rowConstraints>
 <children>
-    <TextField id="txtInputFile" fx:id="txtInputFile" prefHeight="25.0" prefWidth="440.0" GridPane.rowIndex="1" />
-    <Button id="btnBrowse" mnemonicParsing="false" onAction="#btnBrowseAction" text="Browse" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-    <Button id="btnSubmit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnSubmitAction" text="Convert" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+    <Label text="Select the input files">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Label>
+    <TextField id="txtInputFile" fx:id="txtInputFile" prefHeight="25.0" prefWidth="440.0" GridPane.rowIndex="2" />
+    <Button id="btnBrowse" mnemonicParsing="false" onAction="#btnBrowseAction" text="Browse" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <ProgressBar fx:id="progress" prefHeight="18.0" prefWidth="506.0" progress="0.0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+    <Button id="btnSubmit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnSubmitAction" text="Convert" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
 </children>
 </GridPane>

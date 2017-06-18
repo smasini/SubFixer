@@ -56,7 +56,7 @@ public class ChangeController {
     @FXML
     private void btnSubmitAction(){
         int changeValue = Integer.parseInt(txtChangeValue.getText());
-        SubChanger subChanger = new SubChanger(txtInputFile.getText(), rdbAnticipate.isSelected(), txtFromTime.getText(), txtToTime.getText(), changeValue);
+        final SubChanger subChanger = new SubChanger(txtInputFile.getText(), rdbAnticipate.isSelected(), txtFromTime.getText(), txtToTime.getText(), changeValue);
         progress.setProgress(10);
         subChanger.setCallback(new Callback() {
             @Override
@@ -69,9 +69,12 @@ public class ChangeController {
 
             }
         });
-
-        //TODO eseguirlo in background
-        subChanger.parseAndSave();
+        Runnable r = new Runnable() {
+            public void run() {
+                subChanger.parseAndSave();
+            }
+        };
+        new Thread(r).start();
     }
 
     public void setStageAndSetupListeners(Stage stage) {

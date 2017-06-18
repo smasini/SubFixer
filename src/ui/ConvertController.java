@@ -2,10 +2,12 @@ package ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import logic.SubConverter;
+import logic.Utility;
 
 import java.io.File;
 import java.util.List;
@@ -20,6 +22,8 @@ public class ConvertController {
 
     @FXML
     private TextField txtInputFile;
+    @FXML
+    private ProgressBar progress;
 
     @FXML
     private void btnBrowseAction(){
@@ -33,10 +37,15 @@ public class ConvertController {
 
     @FXML
     private void btnSubmitAction(){
+        progress.setProgress(0);
         if(files != null) {
+            int i = 1;
             for (File file : files) {
                 SubConverter.convertFile(file);
+                progress.setProgress(i*files.size() / 100);
+                i++;
             }
+            progress.setProgress(100);
         }
     }
 
