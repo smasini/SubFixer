@@ -117,51 +117,6 @@ public class SubChanger {
         }
     }
 
-    private boolean saveOld(){
-        try {
-            BufferedWriter bw = null;
-            FileOutputStream fileOutputStream = null;
-            OutputStreamWriter outputStreamWriter = null;
-            try {
-                fileOutputStream = new FileOutputStream(new File(filePathDest));
-                outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
-                bw = new BufferedWriter(outputStreamWriter);
-                for (SubSection subSection : subSections) {
-                    bw.write(subSection.getId() + "\n");
-                    bw.write(subSection.printRangeTime() + "\n");
-                    for (String line : subSection.getSubsLines()) {
-                        bw.write(line + "\n");
-                    }
-                    bw.write("\n");
-                }
-            } finally {
-                /*try {
-                    if (fileOutputStream != null) {
-                        fileOutputStream.flush();
-                        fileOutputStream.close();
-                    }
-                }
-                finally {
-                    try {
-                        if (outputStreamWriter != null) {
-                            outputStreamWriter.flush();
-                            outputStreamWriter.close();
-                        }
-                    }
-                    finally {*/
-                        if (bw != null)
-                            bw.close();
-                    //}
-                //}
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
     public void setCallback(Callback callback) {
         this.callback = callback;
     }
